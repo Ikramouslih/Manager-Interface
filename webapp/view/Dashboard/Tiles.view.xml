@@ -4,7 +4,7 @@
     xmlns:m="sap.m"
     xmlns:core="sap.ui.core"
     core:require="{ baseFormatMessage: 'sap/base/strings/formatMessage' }"
-    controllerName="management.controller.Tiles"
+    controllerName="management.controller.Dashboard.Tiles"
     xmlns:mc="sap.suite.ui.microchart"
     xmlns:s="sap.ui.comp.smartmicrochart"
 >
@@ -104,7 +104,7 @@
             renderType="Bare"
         >
             <m:GenericTile
-                id="tileUnassigned"
+                id="tileDone"
                 header="Total Tickets"
                 subheader="Done in Last 30 Days"
                 press="onTicketTilePress"
@@ -136,7 +136,7 @@
             <m:GenericTile
                 id="tileAssigned"
                 header="Total Tickets"
-                subheader="Unassigned"
+                subheader="On Hold"
                 press="onTicketTilePress"
             >
                 <m:TileContent
@@ -145,10 +145,10 @@
                 >
                     <m:NumericContent
                         id="tileAssignedCount"
-                        icon="sap-icon://message-error"
+                        icon="sap-icon://message-warning"
                         value="{TilesData>/donutData/2/value}"
                         withMargin="false"
-                        class="error"
+                        class="warning"
                     />
                 </m:TileContent>
             </m:GenericTile>

@@ -279,10 +279,10 @@
 .sapMITBFilterIcon {
     border: none;
 }
-.IconTabBarLayoutTickets .sapMITBItem:nth-child(5n) {
+.IconTabBarLayoutTickets .sapMITBItem:nth-child(6n) {
     float: right !important;
 }
-.IconTabBarLayoutTickets .sapMITBItem:nth-child(6n) {
+.IconTabBarLayoutTickets .sapMITBItem:nth-child(7n) {
     float: right !important;
 }
 .IconTabBarLayoutConsultants .sapMITBItem:nth-child(4n){

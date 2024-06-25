@@ -1,0 +1,66 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core">
+	<Dialog
+		id="mainDialogSetTicket"
+		title="Target"
+        >
+		<content>
+			<VBox id="_IDGenVBox1" class="sapUiSmallMargin" >
+                    <f:Form id="FormToolbar" editable="true" ariaLabelledBy="Title1">
+                        <f:toolbar>
+                            <Toolbar id="TB1">
+                                <Title id="Title1" text="Set Tickets' Target for this month"/>
+                                <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                            </Toolbar>
+                        </f:toolbar>
+                        <f:layout>
+                            <f:ResponsiveGridLayout id="_IDGenResponsiveGridLayout1"
+                                labelSpanXL="3"
+                                labelSpanL="3"
+                                labelSpanM="3"
+                                labelSpanS="12"
+                                emptySpanXL="0"
+                                emptySpanL="0"
+                                emptySpanM="0"
+                                emptySpanS="0"
+                                columnsXL="2"
+                                columnsL="2"
+                                columnsM="2"
+                                singleContainerFullSize="false"
+                            />
+                        </f:layout>
+                        <f:formContainers>
+                            <f:FormContainer id="_IDGenFormContainer1" ariaLabelledBy="Title2">
+                                <f:formElements>
+                                    <f:FormElement id="targetElement" label="Target">
+                                        <f:fields>
+                                            <Input id="target" value="{/ChefProjet}" required="true" />
+                                        </f:fields>
+                                    </f:FormElement>
+                                </f:formElements>
+                            </f:FormContainer>
+                        </f:formContainers>
+                    </f:Form>
+                    <HBox id="_IDGenHBox1" justifyContent="Center">
+                        <Button id="_IDGenButton2" type="Accept"
+                                class="sapUiMediumMargin"
+                                text="Set"
+                                press="onSetTarget"
+                                width="8rem"
+                                ariaDescribedBy="acceptButtonDescription genericButtonDescription">
+                        </Button>                        
+                        <Button id="_IDGenButton4" type="Back"
+                                class="sapUiMediumMargin"
+                                text="Cancel"
+                                press="onCancelTarget"
+                                width="8rem"
+                                ariaDescribedBy="rejectButtonDescription genericButtonDescription">
+                        </Button>
+                    </HBox>
+                </VBox>
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

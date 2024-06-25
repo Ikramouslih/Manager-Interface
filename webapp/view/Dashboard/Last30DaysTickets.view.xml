@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="management.controller.Last30DaysTickets"
+    controllerName="management.controller.Dashboard.Last30DaysTickets"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:grid="sap.ui.layout.cssgrid"
     displayBlock="true"

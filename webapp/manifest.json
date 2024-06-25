@@ -197,7 +197,7 @@
         },
         {
           "name": "RouteConsultant",
-          "pattern": "Consultants/",
+          "pattern": "Consultants",
           "target": [
             "TargetConsultants"
           ]
@@ -245,10 +245,10 @@
           ]
         },
         {
-          "name": "Project",
-          "pattern": "Project/",
+          "name": "Projects",
+          "pattern": "Projects/",
           "target": [
-            "Project"
+            "Projects"
           ]
         },
         {
@@ -291,13 +291,6 @@
           "target": [
             "UpdateManager"
           ]
-        },
-        {
-          "name": "ConsultantCalendar",
-          "pattern": "ConsultantCalendar/",
-          "target": [
-            "TargetConsultantCalendar"
-          ]
         }
       ],
       "targets": {
@@ -313,77 +306,63 @@
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "Consultants",
-          "viewName": "Consultants"
+          "viewName": "Consultants.Consultants"
         },
         "TargetTicket": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "Tickets",
-          "viewName": "Tickets"
+          "viewName": "Tickets.Tickets"
         },
         "ConsultantDetails": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "ConsultantDetails",
-          "viewName": "Dashboard.ConsultantDetails"
+          "viewName": "Consultants.Profile.ConsultantDetails"
         },
         "CreateTicket": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "CreateTicket",
-          "viewName": "Ticketform"
+          "viewName": "Tickets.CreateTicket"
         },
         "AssignTicket": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "AssignTicket",
-          "viewName": "AssignTicket"
+          "viewName": "Tickets.AssignTicket"
         },
         "CreateUser": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "CreateUser",
-          "viewName": "CreateUser"
+          "viewName": "Users.CreateUser"
         },
-        "Project": {
+        "Projects": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
-          "viewId": "Project",
-          "viewName": "Project"
-        },
-        "TargetCreateProjects": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "CreateProjects",
-          "viewName": "ProjectCreate"
-        },
-        "TargetCTicket": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "CTicket",
-          "viewName": "Consultant.CTicket"
+          "viewId": "Projects",
+          "viewName": "Projects.Projects"
         },
         "TargetUpdateConsultant": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "UpdateConsultant",
-          "viewName": "UpdateConsultant"
+          "viewName": "Consultants.UpdateConsultant"
         },
         "Managers": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "Managers",
-          "viewName": "Managers"
+          "viewName": "Managers.Managers"
         }
         ,
         "UpdateManager": {
@@ -391,21 +370,14 @@
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "UpdateManager",
-          "viewName": "UpdateManager"
+          "viewName": "Managers.UpdateManager"
         },
         "UpdateTicket": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "UpdateTicket",
-          "viewName": "UpdateTicket"
-        },
-        "TargetConsultantCalendar": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "ConsultantCalendar",
-          "viewName": "Consultant.ConsultantCalendar"
+          "viewName": "Tickets.UpdateTicket"
         }
       }
     },

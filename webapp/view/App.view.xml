@@ -42,6 +42,18 @@
                 <ToolbarSpacer id="_IDGenToolbarSpacer1" />
                 <ToolbarSpacer id="_IDGenToolbarSpacer2" />
                 <Button
+                    id="userButton"
+                    text="{i18n>userId}"
+                    type="Transparent"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData
+                            id="_IDGenOverflowToolbarLayoutData4"
+                            closeOverflowOnInteraction="false"
+                        />
+                    </layoutData>
+                </Button>
+                <Button
                     id="notificationButton"
                     icon="sap-icon://bell"
                     visible="{= ${alerts>/alerts/notifications}.length === 0 ? false : true }"
@@ -52,19 +64,6 @@
                     <layoutData>
                         <OverflowToolbarLayoutData
                             id="_IDGenOverflowToolbarLayoutData3"
-                            closeOverflowOnInteraction="false"
-                        />
-                    </layoutData>
-                </Button>
-                <Button
-                    id="userButton"
-                    text="{i18n>userName}"
-                    type="Transparent"
-                    press=".onUserNamePress"
-                >
-                    <layoutData>
-                        <OverflowToolbarLayoutData
-                            id="_IDGenOverflowToolbarLayoutData4"
                             closeOverflowOnInteraction="false"
                         />
                     </layoutData>
@@ -120,14 +119,6 @@
                         icon="sap-icon://business-objects-experience"
                         expanded="true"
                         select="onProjectsSelect"
-                    />
-                    <tnt:NavigationListItem
-                        id="_IDGenNavigationListItem5"
-                        class="sideNavLinks"
-                        text="My Calendar"
-                        icon="sap-icon://appointment-2"
-                        expanded="true"
-                        select="onConsultantCalendar"
                     />
                 </tnt:NavigationList>
             </tnt:SideNavigation>

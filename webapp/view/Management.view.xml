@@ -1,5 +1,4 @@
 <mvc:View
-    controllerName="management.controller.Management"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:grid="sap.ui.layout.cssgrid"
     displayBlock="true"
@@ -10,7 +9,6 @@
     xmlns:viz.data="sap.viz.ui5.data"
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
     xmlns:formLayout="sap.ui.layout.form"
-
 >
     <ScrollContainer
         id="_IDGenScrollContainer1"

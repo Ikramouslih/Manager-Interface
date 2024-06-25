@@ -9,52 +9,61 @@ sap.ui.define([
     "sap/ui/model/resource/ResourceModel",
     "sap/ui/core/routing/History"
 ],
-    function (UIComponent, Device, models, History) {
-        "use strict";
+function (UIComponent, Device, models, ResourceModel, History) {
+    "use strict";
 
-        return UIComponent.extend("management.Component", {
-            metadata: {
-                manifest: "json",
-                interfaces: ["sap.ui.core.IAsyncContentCreation"]
-            },
+    return UIComponent.extend("management.Component", {
+        metadata: {
+            manifest: "json",
+            interfaces: ["sap.ui.core.IAsyncContentCreation"]
+        },
 
-            /**
-             * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
-             * @public
-             * @override
-             */
-            init: function () {
-                // call the base component's init function
-                UIComponent.prototype.init.apply(this, arguments);
+        /**
+         * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
+         * @public
+         * @override
+         */
+        init: function () {
+            // Call the base component's init function
+            UIComponent.prototype.init.apply(this, arguments);
 
-                // enable routing
-                this.getRouter().initialize();
+            // Enable routing
+            this.getRouter().initialize();
 
-                // set the device model
-                this.setModel(models.createDeviceModel(), "device");
-            },
+            // Set the device model
+            this.setModel(models.createDeviceModel(), "device");
 
-            myNavBack: function () {
-                var oHistory = History.getInstance();
-                var oPrevHash = oHistory.getPreviousHash();
-                if (oPrevHash !== undefined) {
-                    window.history.go(-1);
-                } else {
-                    this.getRouter().navTo("masterSettings", {}, true);
-                }
-            },
+            // Set the i18n model
+            var i18nModel = new ResourceModel({
+                bundleName: "management.i18n.i18n"
+            });
+            this.setModel(i18nModel, "i18n");
 
-            getContentDensityClass: function () {
-                if (!this._sContentDensityClass) {
-                    if (!Device.support.touch) {
-                        this._sContentDensityClass = "sapUiSizeCompact";
-                    } else {
-                        this._sContentDensityClass = "sapUiSizeCozy";
-                    }
-                }
-                return this._sContentDensityClass;
+            // Ensure proper content density class is set
+            this.getContentDensityClass();
+        },
+
+        myNavBack: function () {
+            var oHistory = History.getInstance();
+            var oPrevHash = oHistory.getPreviousHash();
+            if (oPrevHash !== undefined) {
+                window.history.go(-1);
+            } else {
+                this.getRouter().navTo("masterSettings", {}, true);
             }
+        },
 
-        });
-    }
-);
+        getContentDensityClass: function () {
+            if (!this._sContentDensityClass) {
+                if (!Device.support.touch) {
+                    this._sContentDensityClass = "sapUiSizeCompact";
+                } else {
+                    this._sContentDensityClass = "sapUiSizeCozy";
+                }
+                this.getRouter().initialize(); 
+            }
+            return this._sContentDensityClass;
+        }
+
+    });
+});

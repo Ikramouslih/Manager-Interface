@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="management.controller.Donut"
+    controllerName="management.controller.Dashboard.DonutManagement"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:m="sap.m"
     xmlns="sap.suite.ui.microchart"

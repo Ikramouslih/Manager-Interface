@@ -6,7 +6,7 @@
     core:require="{ baseFormatMessage: 'sap/base/strings/formatMessage' }"
     xmlns:mc="sap.suite.ui.microchart"
     xmlns:s="sap.ui.comp.smartmicrochart"
-    controllerName="management.controller.KeyNumbers"
+    controllerName="management.controller.Dashboard.KeyNumbers"
 >
     <m:ObjectHeader
         id="_IDGenObjectHeader1"
@@ -47,6 +47,7 @@
                             id="_IDGenRadialMicroChart1"
                             percentage="0"
                             height="7rem"
+                            press="onPressTarget"
                         />
                     </m:FlexBox>
                 </m:FlexBox>
