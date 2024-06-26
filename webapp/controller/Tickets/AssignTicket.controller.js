@@ -136,6 +136,7 @@ sap.ui.define(
         oModel.create("/TICKETIDSet", oData, {
           success: function () {
             MessageToast.show("Data successfully updated.");
+            // TO DO : if oData.Consultant != null => Notification and Email to consultant
             this.onCancel();
             location.reload();
           }.bind(this),

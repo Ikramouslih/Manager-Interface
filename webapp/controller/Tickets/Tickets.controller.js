@@ -298,22 +298,27 @@ sap.ui.define([
       },
 
       onEdit: function (oEvent) {
+        console.log("Edit button clicked");
+      
         var oButton = oEvent.getSource();
         var oBindingContext = oButton.getBindingContext("TicketsModel");
+      
         if (oBindingContext) {
-            var sTicketId = oBindingContext.getProperty("IdTicket");
-            if (sTicketId) {
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("UpdateTicket", {
-                  ticketId: sTicketId
-                });
-            } else {
-                MessageToast.show("Ticket ID is not available.");
-            }
+          var sTicketId = oBindingContext.getProperty("IdTicket");
+      
+          if (sTicketId) {
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("UpdateTicket", {
+              ticketId: sTicketId
+            });
+          } else {
+            sap.m.MessageToast.show("Ticket ID is not available.");
+          }
         } else {
-            MessageToast.show("No binding context available.");
+          sap.m.MessageToast.show("No binding context available.");
         }
       }
+      
     });
   }
 );

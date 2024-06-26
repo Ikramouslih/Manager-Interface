@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="management.controller.Consultant.Profile.Calendar"
+    controllerName="management.controller.Consultants.Profile.Calendar"
     xmlns:l="sap.ui.layout"
     xmlns:u="sap.ui.unified"
     xmlns:mvc="sap.ui.core.mvc"

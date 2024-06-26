@@ -51,7 +51,7 @@
                                 <f:formElements>
                                     <f:FormElement id="idJiraElement" label="Jira Ticket ID">
                                         <f:fields>
-                                            <Input id="IdTicketJira" placeholder="Enter Jira ticket's ID" required="true" value="{IdJira}"/>
+                                      <Input id="IdTicketJira" placeholder="Enter Jira ticket's ID" required="true" value="{IdJira}"/>
                                         </f:fields>
                                     </f:FormElement>
                                     <f:FormElement id="titreElement" label="Titre">
