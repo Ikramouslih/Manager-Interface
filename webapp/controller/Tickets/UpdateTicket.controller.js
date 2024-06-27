@@ -13,13 +13,27 @@ sap.ui.define([
     return Controller.extend("management.controller.Tickets.UpdateTicket", {
 
       onInit: function () {
-          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-          oRouter.getRoute("UpdateTicket").attachPatternMatched(this._onObjectMatched, this);
-        },
+        var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            console.log("this ", this);
+            console.log("Router for UpdateTicket: ", oRouter);
+
+            if (oRouter) {
+                console.log("this", this._onObjectMatched); 
+                oRouter.getRoute("UpdateTicket").attachPatternMatched(this._onObjectMatched, this);
+                console.log("Route 'UpdateTicket' attached to pattern matched event");
+            } else {
+                console.error("Router not found");
+            }   
+                
+      },
+      
     
       _onObjectMatched: function (oEvent) {
+
           var sTicketId = oEvent.getParameter("arguments").ticketId;
+          console.log("Ticket ID: ", sTicketId);
           var oView = this.getView();
+
           var sPath = "/" + oView.getModel().createKey("TICKETIDSet", {
               IdTicket: sTicketId
           });

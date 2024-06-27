@@ -4,18 +4,39 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/odata/v2/ODataModel",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    "sap/ui/model/json/JSONModel"
 ],
-    function (Controller, MessageToast, Filter, FilterOperator, ODataModel, Fragment) {
+    function (Controller, MessageToast, Filter, FilterOperator, ODataModel, Fragment, JSONModel) {
         "use strict";
 
         return Controller.extend("management.controller.Dashboard.KeyNumbers", {
 
             onInit: function () {
+                this.loadConfig();
                 this._calculatePriorityChart();
                 this._fetchTicketsForCurrentMonth();
                 this._fetchTop4ClientsByTickets();
             },
+
+            loadConfig: function () {
+                var oConfigModel = new JSONModel();
+                oConfigModel.loadData("model/config.json");
+                oConfigModel.attachRequestCompleted(function() {
+                    this.getView().setModel(oConfigModel, "config");
+                }.bind(this));
+            },
+
+            saveConfig: function (targetTickets) {
+                var oConfigModel = this.getView().getModel("config");
+                oConfigModel.setProperty("/targetTickets", parseInt(targetTickets, 10));
+
+                // Simulate saving to JSON file (this won't actually save to a file, but you can use this as a placeholder)
+                var oData = oConfigModel.getData();
+                localStorage.setItem("configData", JSON.stringify(oData));
+                sap.m.MessageToast.show("Configuration saved successfully");
+            },
+
 
             _fetchTicketsForCurrentMonth: function () {
 
@@ -227,7 +248,38 @@ sap.ui.define([
 
             onCancelTarget: function () {
                 this.byId("mainDialogSetTicket").close();
+            },
+
+            onSetTarget: function () {
+                var targetValue = this.byId("target").getValue();
+                this.saveConfig(targetValue);
+                this.byId("mainDialogSetTicket").close();
+                this.loadChart();
+            },
+
+            loadChart: function () {
+                var oConfigModel = this.getView().getModel("config");
+                var targetTickets = oConfigModel.getProperty("/targetTickets");
+
+                this.getView().getModel().read("/TICKETIDSet", {
+                    success: function (data) {
+                        if (!data || !data.results || data.results.length === 0) {
+                            return;
+                        }
+
+                        var totalTickets = data.results.length;
+                        var progressPercentage = (totalTickets / targetTickets) * 100;
+
+                        var radialMicroChart = this.getView().byId("_IDGenRadialMicroChart1");
+                        radialMicroChart.setPercentage(progressPercentage);
+                    }.bind(this),
+                    error: function (oError) {
+                        console.error("Error fetching ticket data:", oError);
+                    }
+                });
             }
+            
+        
 
 
         });

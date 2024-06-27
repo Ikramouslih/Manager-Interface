@@ -76,6 +76,10 @@ sap.ui.define([
         var intEstimated = parseInt(sEstimated, 10);
         var sIdTicket = "T-" +  sProjet.substring(0, 2).toUpperCase() + ('000' + Math.floor(Math.random() * 1000)).slice(-3);
 
+        // Get userId from the i18n model and fetch user data
+        var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+        var sUserId = oBundle.getText("userId");
+
         var oData = {
           IdTicket: sIdTicket,
           IdJira: sIdTicketJira,
@@ -88,13 +92,13 @@ sap.ui.define([
           CreationDate: this._formatDate(new Date()),
           StartDate: "",
           EndDate: "",
-          CreatedBy: "",
+          CreatedBy: sUserId
         };
 
         if (sConsultantId === null) {
           oData.Status = 'Unassigned';
         } else {
-          oData.Status = 'In Progress';
+          oData.Status = 'On Hold';
           oData.Consultant = sConsultantId;
         }
 
@@ -103,6 +107,7 @@ sap.ui.define([
         oModel.create("/TICKETIDSet", oData, {
           success: function () {
             MessageToast.show("Data successfully added.");
+            // TO DO : if oData.Consultant != null => Notification and Email to consultant
             this.onReset();
             location.reload();
           }.bind(this),

@@ -266,7 +266,7 @@
         },
         {
           "name": "UpdateConsultant",
-          "pattern": "consultant/update/{consultantId}",
+          "pattern": "consultant/{consultantId}",
           "target": [
             "TargetUpdateConsultant"
           ]
@@ -279,15 +279,13 @@
           ]
         },
         {
+          "pattern": "ticket/{ticketId}",
           "name": "UpdateTicket",
-          "pattern": "ticket/update/{ticketId}",
-          "target": [
-            "UpdateTicket"
-          ]
+          "target": "UpdateTicket"
         },
         {
           "name": "UpdateManager",
-          "pattern": "manager/update/{managerId}",
+          "pattern": "manager/{managerId}",
           "target": [
             "UpdateManager"
           ]

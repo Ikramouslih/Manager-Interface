@@ -57,11 +57,7 @@ function (
     },
 
     // Update the selected key in the side model
-    onRouteChange: function (oEvent) {
-      this.getModel('side').setProperty('/selectedKey', oEvent.getParameter('name'));
-      if (Device.system.phone) {
-        this.onSideNavButtonPress();
-      }
+    onRouteChange: function (oEvent) {  
     },
 
     // Toggle side navigation panel
