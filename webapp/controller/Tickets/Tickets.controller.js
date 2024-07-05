@@ -2,9 +2,11 @@ sap.ui.define([
   "sap/ui/core/mvc/Controller",
   "sap/ui/model/Filter",
   "sap/ui/model/FilterOperator",
-  "sap/ui/model/json/JSONModel"
+  "sap/ui/model/json/JSONModel",
+  "sap/ui/core/Fragment"
+
 ], 
-  function (Controller, Filter, FilterOperator, JSONModel) {
+  function (Controller, Filter, FilterOperator, JSONModel, Fragment) {
     "use strict";
 
     return Controller.extend("management.controller.Tickets.Tickets", {
@@ -317,7 +319,44 @@ sap.ui.define([
         } else {
           sap.m.MessageToast.show("No binding context available.");
         }
-      }
+      },
+
+      // Show the ticket information in a dialog
+      showTicketInfo: function (oEvent) {
+        var oLink = oEvent.getSource();
+        var oBindingContext = oLink.getBindingContext("TicketsModel");
+        var sTicketId = oBindingContext.getProperty("IdTicket");
+    
+        var oModel = this.getView().getModel();
+        oModel.read("/TICKETIDSet('" + sTicketId + "')", {
+            success: function (oData) {
+                console.log("Ticket details fetched:", oData); // Check if oData contains the expected data
+    
+                if (!this._pTicketDetailsDialog) {
+                    this._pTicketDetailsDialog = Fragment.load({
+                        id: this.getView().getId(),
+                        name: "management.view.Fragments.TicketDetails",
+                        controller: this
+                    }).then(function (oDialog) {
+                        this.getView().addDependent(oDialog);
+                        return oDialog;
+                    }.bind(this));
+                }
+                this._pTicketDetailsDialog.then(function (oDialog) {
+                    oDialog.setModel(new JSONModel(oData));
+                    oDialog.open();
+                });
+                
+            }.bind(this),
+            error: function (oError) {
+                MessageToast.show("Error fetching ticket data: " + oError.message);
+            }
+        });
+      },
+
+      onCloseDialog: function () {
+        this.byId("ticketDetailsDialog").close();
+      },
       
     });
   }

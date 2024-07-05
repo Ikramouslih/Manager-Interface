@@ -22,7 +22,6 @@ sap.ui.define([
           oInput.setValueStateText("This field is required");
           return false;
         } else {
-          oInput.setValueState(ValueState.None);
           return true;
         }
       },
@@ -32,7 +31,6 @@ sap.ui.define([
         var aInputs = [
           oView.byId("IdTicketJira"),
           oView.byId("Titre"),
-          oView.byId("Estimated")
         ];
 
         var aSelects = [
@@ -54,7 +52,6 @@ sap.ui.define([
             oSelect.setValueStateText("This field is required");
             bValid = false;
           } else {
-            oSelect.setValueState(ValueState.None);
           }
         });
 
@@ -74,7 +71,7 @@ sap.ui.define([
         var sEstimated = oView.byId("Estimated").getValue();
         var sPriority = oView.byId("Priority").getSelectedKey();
         var intEstimated = parseInt(sEstimated, 10);
-        var sIdTicket = "T-" +  sProjet.substring(0, 2).toUpperCase() + ('000' + Math.floor(Math.random() * 1000)).slice(-3);
+        var sIdTicket = "T-" + sProjet.substring(2, 5).toUpperCase() + ('00000' + Math.floor(Math.random() * 100000)).slice(-5);
 
         // Get userId from the i18n model and fetch user data
         var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
@@ -107,14 +104,106 @@ sap.ui.define([
         oModel.create("/TICKETIDSet", oData, {
           success: function () {
             MessageToast.show("Data successfully added.");
-            // TO DO : if oData.Consultant != null => Notification and Email to consultant
-            this.onReset();
-            location.reload();
+            if(sConsultantId !== null){
+              this._createNotification(sIdTicket).then(function () {
+                this.onReset(); 
+                location.reload();
+              }.bind(this)).catch(function (oError) {
+                MessageToast.show("Error adding notification: " + oError.message);
+              });
+            } else {
+              this.onReset();
+              location.reload();
+            }
           }.bind(this),
           error: function (oError) {
             MessageToast.show("Error adding data: " + oError.message);
           }
         });
+
+        if ( sConsultantId !== null ){
+          oModel.read("/CONSULTANTIDSet('" + sConsultantId + "')", {
+            success: function (oData) {
+              var inputData = {
+                ConsultantId: oData.ConsultantId,
+                FirstName: oData.FirstName,
+                Name: oData.Name,
+                Email: oData.Email,
+                Expertise: oData.Expertise,
+                Grade: oData.Grade,
+                Country: oData.Country,
+                Login: oData.Login,
+                Password: oData.Password,
+                Hold: oData.Hold,
+                Disponilbilty: "0",
+                ManagerId: oData.ManagerId
+              };
+              oModel.create("/CONSULTANTIDSet", inputData, {
+                success: function () {
+                  location.reload();
+                }.bind(this),
+                error: function (oError) {
+                  sap.m.MessageToast.show("Error changing availability: " + oError.message);
+                }
+              });
+  
+            }.bind(this),
+            error: function (oError) {
+              MessageToast.show("Error adding data: " + oError.message);
+            }
+          });
+        }
+      },
+
+      _createNotification: function (sTicketId, sConsultantId) {
+        return new Promise(function (resolve, reject) {
+          var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+          var sUserId = oBundle.getText("userId");
+          var oModel = this.getOwnerComponent().getModel();
+
+          oModel.read("/MANAGERIDSet('" + sUserId + "')", {
+            success: function (response) {
+              var sNotifID = "N-" + ('0000000000000' + Math.floor(Math.random() * 1000000000000)).slice(-12);
+              var notification = {
+                Id: sNotifID,
+                IdTicketJira: sTicketId,
+                Type: "AssignedByM",
+                Seen: "0",
+                DateNotif: this._formatDate(new Date()),
+                SentBy: sUserId,
+                ReceivedBy: sConsultantId,
+                Deleted: "0",
+                Content: ""
+              };
+
+              oModel.create("/NOTIFICATIONIDSet", notification, {
+                success: function () {
+                  console.log("Notification created.");
+                  resolve();
+                },
+                error: function (oError) {
+                  console.error("Create operation failed", oError);
+                  var errorMessage;
+                  if (oError.responseText) {
+                    try {
+                      var errorResponse = JSON.parse(oError.responseText);
+                      errorMessage = errorResponse.error.message.value;
+                    } catch (e) {
+                      errorMessage = "An unknown error occurred";
+                    }
+                  } else {
+                    errorMessage = oError.message;
+                  }
+                  reject(new Error(errorMessage));
+                }
+              });
+            }.bind(this),
+            error: function (error) {
+              console.error("Error while fetching consultant data:", error);
+              reject(error);
+            }
+          });
+        }.bind(this));
       },
 
       onReset: function () {
@@ -141,16 +230,15 @@ sap.ui.define([
 
         var aSelects = [
           oView.byId("Projet"),
-          oView.byId("Technology"),
           oView.byId("Consultant")
         ];
 
         aInputs.forEach(function (oInput) {
-          oInput.setValueState(ValueState.None);
+          oInput.setValue("");
         });
 
         aSelects.forEach(function (oSelect) {
-          oSelect.setValueState(ValueState.None);
+          oSelect.setSelectedKey();
         });
       },
 

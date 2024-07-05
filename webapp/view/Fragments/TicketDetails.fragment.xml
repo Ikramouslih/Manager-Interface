@@ -5,39 +5,30 @@
 >
     <Dialog
         id="ticketDetailsDialog"
-        title="Ticket Details"
+        title="{/IdTicket}"
         contentWidth="auto"
         contentHeight="auto"
         resizable="true"
         class="ticketDetailsDialog"
     >
-        <core:Icon
-            id="_IDGenIcon1"
-            src="sap-icon://syringe"
-            class="size1"
-            color="#031E48"
-        >
-            <core:layoutData>
-                <FlexItemData
-                    id="_IDGenFlexItemData1"
-                    growFactor="1"
-                />
-            </core:layoutData>
-        </core:Icon>
         <content>
             <VBox
                 id="_IDGenVBox1"
                 class="ticketDetailsContainer"
             >
                 <HBox
-                    id="_IDGenHBox1"
-                    alignItems="Center"
-                    justifyContent="Center"
+                    id="_IDGenHBoczex6"
+                    class="ticketDetailRow"
                 >
+                    <Label
+                        id="_IDGenLzdzdabel5"
+                        text="Jira ID:"
+                        class="ticketDetailLabel"
+                    />
                     <Text
-                        id="_IDGenText1"
-                        text="{IdJira}"
-                        class="ticketId"
+                        id="_IDGenTeczecxt6"
+                        text="{/IdJira}"
+                        class="ticketDetailText"
                     />
                 </HBox>
                 <HBox
@@ -51,7 +42,7 @@
                     />
                     <Text
                         id="_IDGenText2"
-                        text="{Titre}"
+                        text="{/Titre}"
                         class="ticketDetailText"
                     />
                 </HBox>
@@ -66,7 +57,7 @@
                     />
                     <Text
                         id="_IDGenText3"
-                        text="{Projet}"
+                        text="{/Projet}"
                         class="ticketDetailText"
                     />
                 </HBox>
@@ -81,7 +72,7 @@
                     />
                     <Text
                         id="_IDGenText4"
-                        text="{Technology}"
+                        text="{/Technology}"
                         class="ticketDetailText"
                     />
                 </HBox>
@@ -96,7 +87,7 @@
                     />
                     <Text
                         id="_IDGenText5"
-                        text="{Status}"
+                        text="{/Status}"
                         class="ticketDetailText"
                     />
                 </HBox>
@@ -111,7 +102,22 @@
                     />
                     <Text
                         id="_IDGenText6"
-                        text="{Priority}"
+                        text="{/Priority}"
+                        class="ticketDetailText"
+                    />
+                </HBox>
+                <HBox
+                    id="_IDGenHBoxcezc6"
+                    class="ticketDetailRow"
+                >
+                    <Label
+                        id="_IDGenLabel5zcez"
+                        text="Created By:"
+                        class="ticketDetailLabel"
+                    />
+                    <Text
+                        id="_IDGenText6czc"
+                        text="{/CreatedBy}"
                         class="ticketDetailText"
                     />
                 </HBox>
@@ -126,7 +132,7 @@
                     />
                     <Text
                         id="_IDGenText7"
-                        text="{StartDate}"
+                        text="{= ${/StartDate} ? ${/StartDate} : '-' }"
                         class="ticketDetailText"
                     />
                 </HBox>
@@ -141,7 +147,7 @@
                     />
                     <Text
                         id="_IDGenText8"
-                        text="{EndDate}"
+                        text="{= ${/EndDate} ? ${/EndDate} : '-' }"
                         class="ticketDetailText"
                     />
                 </HBox>
@@ -156,7 +162,7 @@
                     />
                     <Text
                         id="_IDGenText9"
-                        text="{Description}"
+                        text="{/Description}"
                         class="ticketDetailText"
                     />
                 </HBox>

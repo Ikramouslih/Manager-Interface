@@ -97,6 +97,11 @@ sap.ui.define([
         var sHold = oView.byId("hold").getSelectedKey() === "Active" ? "1" : "0";
         var sRole = oView.byId("role").getSelectedKey();
 
+        // Get userId from the i18n model and fetch user data
+        this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
+        var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+        var sUserId = oBundle.getText("userId");
+
         if(sRole === "Consultant") {
           var oData = {
             ConsultantId: "C-" + sConsultantId,
@@ -110,7 +115,7 @@ sap.ui.define([
             Password: sPassword,
             Hold: sHold,
             Disponilbilty: "1",
-            ManagerId: ""
+            ManagerId: sUserId
           };
           
           var oModel = oView.getModel();
@@ -185,11 +190,11 @@ sap.ui.define([
         ];
 
         aInputs.forEach(function (oInput) {
-          oInput.setValueState(ValueState.None);
+          oInput.setValue("");
         });
 
         aSelects.forEach(function (oSelect) {
-          oSelect.setValueState(ValueState.None);
+          oSelect.setSelectedKey();
         });
       },
 

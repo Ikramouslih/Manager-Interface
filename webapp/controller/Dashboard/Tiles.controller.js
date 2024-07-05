@@ -59,7 +59,7 @@ sap.ui.define([
                 return endDate >= formattedLast30Days;
             }).length;
             if (doneTickets > 0){
-                statusCounts.done = doneTickets-1;
+                statusCounts.done = doneTickets;
             }else{
                 statusCounts.done = 0;
             }

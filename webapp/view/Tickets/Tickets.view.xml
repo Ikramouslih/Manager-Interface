@@ -339,7 +339,7 @@
                                 icon="sap-icon://show"
                                 type="Transparent"
                                 class="showicon"
-                                press="onShow"
+                                press="showTicketInfo"
                             />
                         </template>
                     </Column>
@@ -348,7 +348,7 @@
                         hAlign="End"
                     >
                         <m:Label
-                            id="_IDGenText6"
+                            id="_IDGenText6cze"
                             text=""
                         />
                         <template>

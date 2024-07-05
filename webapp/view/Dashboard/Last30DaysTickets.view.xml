@@ -33,6 +33,11 @@
                         value="{TicketsUnassigned}"
                     />
                     <viz.data:MeasureDefinition
+                        id="_IDGenMeasureDefinition3678"
+                        name="On Hold"
+                        value="{TicketsOnHold}"
+                    />
+                    <viz.data:MeasureDefinition
                         id="_IDGenMeasureDefinition2"
                         name="In Progress"
                         value="{TicketsInProgress}"
@@ -54,6 +59,12 @@
             />
             <viz.feeds:FeedItem
                 id="_IDGenFeedItem2"
+                uid="valueAxis"
+                type="Measure"
+                values="On Hold"
+            />
+            <viz.feeds:FeedItem
+                id="_IDGenFeedItem232"
                 uid="valueAxis"
                 type="Measure"
                 values="In Progress"

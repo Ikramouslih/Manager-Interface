@@ -74,8 +74,7 @@ sap.ui.define(
         var oView = this.getView();
         var aInputs = [
           oView.byId("IdTicketJira"),
-          oView.byId("Titre"),
-          oView.byId("Estimated")
+          oView.byId("Titre")
         ];
 
         var aSelects = [
@@ -121,7 +120,7 @@ sap.ui.define(
           EndDate: oView.getBindingContext().getProperty("EndDate"),
           CreatedBy: oView.getBindingContext().getProperty("CreatedBy"),
           CreationDate: oView.getBindingContext().getProperty("CreationDate"),
-          Status: oView.getBindingContext().getProperty("Status"),
+          Status: 'On Hold',
         }; 
 
         if (sConsultantId === null) {
@@ -135,10 +134,20 @@ sap.ui.define(
 
         oModel.create("/TICKETIDSet", oData, {
           success: function () {
-            MessageToast.show("Data successfully updated.");
-            // TO DO : if oData.Consultant != null => Notification and Email to consultant
-            this.onCancel();
-            location.reload();
+            MessageToast.show("Data successfully added.");
+            if(sConsultantId !== null){
+              var sIdTicket = oView.getBindingContext().getProperty("IdTicket");
+              var sConsultantId = oView.byId("Consultant").getSelectedItem().getKey();
+              this._createNotification(sIdTicket, sConsultantId).then(function () {
+                this.onReset(); 
+                location.reload();
+              }.bind(this)).catch(function (oError) {
+                MessageToast.show("Error adding notification: " + oError.message);
+              });
+            } else {
+              this.onReset();
+              location.reload();
+            }
           }.bind(this),
           error: function (oError) {
             MessageToast.show("Error adding data: " + oError.message);
@@ -175,8 +184,59 @@ sap.ui.define(
             MessageToast.show("Error adding data: " + oError.message);
           }
         });
-
       },
+
+      _createNotification: function (sTicketId, sConsultantId) {
+        return new Promise(function (resolve, reject) {
+          var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+          var sUserId = oBundle.getText("userId");
+          var oModel = this.getOwnerComponent().getModel();
+
+          oModel.read("/MANAGERIDSet('" + sUserId + "')", {
+            success: function (response) {
+              var sNotifID = "N-" + ('0000000000000' + Math.floor(Math.random() * 1000000000000)).slice(-12);
+              var notification = {
+                Id: sNotifID,
+                IdTicketJira: sTicketId,
+                Type: "AssignedByM",
+                Seen: "0",
+                DateNotif: this._formatDate(new Date()),
+                SentBy: sUserId,
+                ReceivedBy: sConsultantId,
+                Deleted: "0",
+                Content: ""
+              };
+
+              oModel.create("/NOTIFICATIONIDSet", notification, {
+                success: function () {
+                  console.log("Notification created.");
+                  resolve();
+                },
+                error: function (oError) {
+                  console.error("Create operation failed", oError);
+                  var errorMessage;
+                  if (oError.responseText) {
+                    try {
+                      var errorResponse = JSON.parse(oError.responseText);
+                      errorMessage = errorResponse.error.message.value;
+                    } catch (e) {
+                      errorMessage = "An unknown error occurred";
+                    }
+                  } else {
+                    errorMessage = oError.message;
+                  }
+                  reject(new Error(errorMessage));
+                }
+              });
+            }.bind(this),
+            error: function (error) {
+              console.error("Error while fetching consultant data:", error);
+              reject(error);
+            }
+          });
+        }.bind(this));
+      },
+
 
       onCancel: function () {
           this.getOwnerComponent().getRouter().navTo("RouteTicket");

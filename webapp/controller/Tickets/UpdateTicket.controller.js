@@ -80,7 +80,6 @@ sap.ui.define([
           oInput.setValueStateText("This field is required");
           return false;
         } else {
-          oInput.setValueState(ValueState.None);
           return true;
         }
       },
@@ -112,7 +111,6 @@ sap.ui.define([
             oSelect.setValueStateText("This field is required");
             bValid = false;
           } else {
-            oSelect.setValueState(ValueState.None);
           }
         });
 
