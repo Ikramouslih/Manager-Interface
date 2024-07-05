@@ -105,7 +105,7 @@ sap.ui.define([
           success: function () {
             MessageToast.show("Data successfully added.");
             if(sConsultantId !== null){
-              this._createNotification(sIdTicket).then(function () {
+              this._createNotification(sIdTicket,sConsultantId).then(function () {
                 this.onReset(); 
                 location.reload();
               }.bind(this)).catch(function (oError) {

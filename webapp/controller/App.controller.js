@@ -6,11 +6,14 @@ sap.ui.define([
   'sap/m/library',
   'sap/m/ResponsivePopover',
   'sap/m/List',
-  'sap/m/CustomListItem',
-  'sap/m/Text',
-  'sap/m/VBox',
-  'sap/ui/core/Icon',
-  'sap/ui/core/format/DateFormat'
+  'sap/m/StandardListItem',
+  'sap/ui/core/format/DateFormat',
+  "sap/ui/model/json/JSONModel",
+  "sap/ui/core/Fragment",
+  "sap/m/Button",
+  "sap/ui/model/Filter",
+  "sap/m/MessageToast",
+  "sap/ui/model/FilterOperator"
 ],
 function (
   BaseController,
@@ -20,11 +23,14 @@ function (
   mobileLibrary,
   ResponsivePopover,
   List,
-  CustomListItem,
-  Text,
-  VBox,
-  Icon,
-  DateFormat
+  StandardListItem,
+  DateFormat,
+  JSONModel,
+  Fragment,
+  Button,
+  Filter,
+  MessageToast,
+  FilterOperator
 ) {
   "use strict";
 
@@ -112,121 +118,126 @@ function (
       this.getOwnerComponent().getRouter().navTo("Managers");
     },
 
-    _loadNotifications: function() {
+    _loadNotifications: function () {
       var oModel = this.getView().getModel();
       var aNotifications = [];
       var aTickets = [];
       var oTicketMap = {};
-  
-      // Function to merge notifications with ticket data and update the model
+    
       var checkIfAllLoaded = function () {
-          if (aNotifications.length > 0 && aTickets.length > 0) {
-              // Create map for tickets
-              oTicketMap = aTickets.reduce(function (map, ticket) {
-                  map[ticket.IdTicketJira] = ticket.Description; // Assuming the title field is Description
-                  return map;
-              }, {});
-  
-              // Sort the results by date in descending order
-              aNotifications.sort(function(a, b) {
-                  var dateA = new Date(a.DateNotif);
-                  var dateB = new Date(b.DateNotif);
-                  return dateB - dateA; // Sort in descending order
-              });
-  
-              // Create JSON model with sorted data
-              var oJSONModel = new sap.ui.model.json.JSONModel({ results: aNotifications });
-              this._oNotificationList.setModel(oJSONModel);
-              this._oNotificationList.bindItems("/results", new sap.m.CustomListItem({
-                  content: new sap.m.VBox({
-                      items: [
-                          new sap.m.HBox({
-                              items: [
-                                  new sap.ui.core.Icon({
-                                      src: {
-                                          path: 'Type',
-                                          formatter: function(sType) {
-                                              return sType === 'BLOCK' ? 'sap-icon://error' : 'sap-icon://sys-enter-2';
-                                          }
-                                      },
-                                      color: {
-                                          path: 'Type',
-                                          formatter: function(sType) {
-                                              return sType === 'BLOCK' ? 'red' : 'green';
-                                          }
-                                      }
-                                  }),
-                                  new sap.m.Text({ text: "{Type}" })
-                              ],
-                              layoutData: new sap.m.FlexItemData({ growFactor: 1, styleClass: "sapUiSmallMarginBottom sapUiSmallMarginBegin" })
-                          }),
-                          new sap.m.VBox({
-                              items: [
-                                  new sap.m.Text({
-                                      text: {
-                                          path: "DateNotif",
-                                          formatter: this._formatNotificationDate
-                                      },
-                                      layoutData: new sap.m.FlexItemData({ growFactor: 1, styleClass: "sapUiSmallMarginBottom sapUiSmallMarginBegin" })
-                                  }),
-                                  new sap.m.Text({
-                                      text: "{SentBy}",
-                                      layoutData: new sap.m.FlexItemData({ growFactor: 1, styleClass: "sapUiSmallMarginBegin sapUiSmallMarginBottom" })
-                                  }),
-                                  new sap.m.Text({
-                                      text: {
-                                          parts: ["IdTicketJira"],
-                                          formatter: function(sIdTicketJira) {
-                                              return oTicketMap[sIdTicketJira] || "Unknown Ticket";
-                                          }
-                                      },
-                                      layoutData: new sap.m.FlexItemData({ growFactor: 1, styleClass: "sapUiSmallMarginBegin sapUiSmallMarginBottom" })
-                                  })
-                              ]
-                          })
-                      ],
-                      layoutData: new sap.m.FlexItemData({ growFactor: 1, styleClass: "sapUiSmallMarginBottom sapUiSmallMarginBegin" })
-                  })
-              }));
-          }
+        if (aNotifications.length > 0 && aTickets.length > 0) {
+          oTicketMap = aTickets.reduce(function (map, ticket) {
+            map[ticket.IdTicketJira] = ticket.Description;
+            return map;
+          }, {});
+    
+          aNotifications.sort(function (a, b) {
+            var dateA = new Date(a.DateNotif);
+            var dateB = new Date(b.DateNotif);
+            return dateA - dateB;
+          });
+    
+          var oJSONModel = new sap.ui.model.json.JSONModel({ results: aNotifications });
+          this._oNotificationList.setModel(oJSONModel);
+          this._oNotificationList.bindItems("/results", new sap.m.StandardListItem({
+            title: "{= ${Type} === 'StatusChange' ? 'Ticket Done.' : 'Ticket assigned.' }",
+            description: {
+              parts: ['Type', 'IdTicketJira', 'SentBy'],
+              formatter: function (sType, sIdTicketJira, sSentBy) {
+                if (sType === 'StatusChange') {
+                  return `Ticket ${sIdTicketJira} done by Consultant ${sSentBy}.`;
+                } else {
+                  return `Ticket ${sIdTicketJira} assigned to Consultant ${sSentBy}.`;
+                }
+              }
+            },
+            info: {
+              parts: ['DateNotif'],
+              formatter: this._formatNotificationDate.bind(this)
+            },
+            icon: {
+              path: 'Type',
+              formatter: function (sType) {
+                return sType === 'StatusChange' ? 'sap-icon://message-success' : 'sap-icon://clinical-order';
+              }
+            },
+            customData: [
+              new sap.ui.core.CustomData({
+                key: 'iconClass',
+                value: {
+                  path: 'Type',
+                  formatter: function (sType) {
+                    return sType === 'StatusChange' ? 'success' : 'info';
+                  }
+                }
+              })
+            ],
+            press: (oEvent) => {
+              var idTicket = oEvent.getSource().getBindingContext().getProperty("IdTicketJira");
+              this.showTicketInfo(oEvent, idTicket);
+            },
+            iconDensityAware: false,
+            iconInset: true,
+            type: 'Active'
+          }));
+    
+          this._oNotificationList.attachUpdateFinished(function () {
+            this._oNotificationList.getItems().forEach(function (oItem) {
+              var sIconClass = oItem.getCustomData()[0].getValue();
+              oItem.addStyleClass(sIconClass);
+            });
+          }.bind(this));
+        }
       }.bind(this);
-  
-      // Read notifications
+    
+      var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+      var sUserId = oBundle.getText("userId");
+    
       oModel.read("/NOTIFICATIONIDSet", {
-          success: function(oData) {
-              aNotifications = oData.results;
-              console.log("NOTIFICATIONIDSet", aNotifications);
-              checkIfAllLoaded();
-          },
-          error: function(oError) {
-              sap.m.MessageToast.show("Failed to load notifications.");
-          }
+        filters: [new Filter("ReceivedBy", FilterOperator.EQ, sUserId)],
+        success: function (oData) {
+          oData.results.sort(function (a, b) {
+            var dateA = new Date(a.DateNotif);
+            var dateB = new Date(b.DateNotif);
+            return dateA - dateB;
+          });
+          aNotifications = oData.results.slice(-10);
+          checkIfAllLoaded();
+        },
+        error: function (oError) {
+          sap.m.MessageToast.show("Failed to load notifications.");
+        }
       });
-  
-      // Read tickets
+    
       oModel.read("/TICKETIDSet", {
-          success: function(oData) {
-              aTickets = oData.results;
-              console.log("TICKETIDSet", aTickets);
-              checkIfAllLoaded();
-          },
-          error: function(oError) {
-              sap.m.MessageToast.show("Failed to load tickets.");
-          }
+        success: function (oData) {
+          aTickets = oData.results;
+          checkIfAllLoaded();
+        },
+        error: function (oError) {
+          sap.m.MessageToast.show("Failed to load tickets.");
+        }
       });
-  }
-  ,  
+    },
+    
     onNotificationPress: function(oEvent) {
       if (!this._oPopover) {
           this._oNotificationList = new List({
               id: "notificationList"
           });
           
+          var oButton = new Button({
+            text: "Show All Notifications",
+            press: function (oEvent) {
+              MessageToast.show("Show All Notifications clicked");
+            }
+          }); 
           this._oPopover = new ResponsivePopover({
               title: "Notifications",
-              contentWidth: "300px",
+              contentWidth: "550px",
               placement: mobileLibrary.PlacementType.Bottom,
-              content: [this._oNotificationList]
+              content: [this._oNotificationList],
+              endButton : oButton,
           });
 
           // sync style class with the current view
@@ -270,6 +281,41 @@ function (
           }
         }
       }
-    }
+    },
+
+    // Show the ticket information in a dialog
+    showTicketInfo: function (oEvent, sTicketId) {
+      var oLink = oEvent.getSource();
+      var oBindingContext = oLink.getBindingContext("TicketsModel");
+  
+      var oModel = this.getView().getModel();
+      oModel.read("/TICKETIDSet('" + sTicketId + "')", {
+          success: function (oData) {  
+              if (!this._pTicketDetailsDialog) {
+                  this._pTicketDetailsDialog = Fragment.load({
+                      id: this.getView().getId(),
+                      name: "management.view.Fragments.TicketDetails",
+                      controller: this
+                  }).then(function (oDialog) {
+                      this.getView().addDependent(oDialog);
+                      return oDialog;
+                  }.bind(this));
+              }
+              this._pTicketDetailsDialog.then(function (oDialog) {
+                  oDialog.setModel(new JSONModel(oData));
+                  oDialog.open();
+              });
+              
+          }.bind(this),
+          error: function (oError) {
+              MessageToast.show("Error fetching ticket data: " + oError.message);
+          }
+      });
+    },
+
+    onCloseDialog: function () {
+      this.byId("ticketDetailsDialog").close();
+    },
+
   });
 });

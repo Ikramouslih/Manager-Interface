@@ -133,6 +133,9 @@
 .success .sapUiIcon{
     color: green !important;
 }
+.info .sapUiIcon{
+    color: blue !important;
+}
 .warning .sapUiIcon{
     color: orange !important;
 }
