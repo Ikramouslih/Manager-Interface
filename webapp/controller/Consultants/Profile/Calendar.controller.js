@@ -58,12 +58,12 @@ sap.ui.define([
                             });
 
                             oLegend.addItem(new sap.ui.unified.CalendarLegendItem({
-                                text: "Disponible",
+                                text: "Available",
                                 type: CalendarDayType.Type08 // Type08 pour la couleur verte
                             }));
 
                             oLegend.addItem(new sap.ui.unified.CalendarLegendItem({
-                                text: "Non disponible",
+                                text: "Unavailable",
                                 type: CalendarDayType.Type02 // Type02 pour la couleur rouge
                             }));
                         },

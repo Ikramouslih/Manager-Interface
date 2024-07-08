@@ -117,6 +117,9 @@ function (
     onManagersSelect: function () {
       this.getOwnerComponent().getRouter().navTo("Managers");
     },
+    onProfileSelect: function () {
+      this.getOwnerComponent().getRouter().navTo("Profile");
+    },
 
     _loadNotifications: function () {
       var oModel = this.getView().getModel();
@@ -145,9 +148,9 @@ function (
               parts: ['Type', 'IdTicketJira', 'SentBy'],
               formatter: function (sType, sIdTicketJira, sSentBy) {
                 if (sType === 'StatusChange') {
-                  return `Ticket ${sIdTicketJira} done by Consultant ${sSentBy}.`;
+                  return `The ticket ${sIdTicketJira} done by the consultant ${sSentBy}.`;
                 } else {
-                  return `Ticket ${sIdTicketJira} assigned to Consultant ${sSentBy}.`;
+                  return `The ticket ${sIdTicketJira} assigned to the consultant ${sSentBy}.`;
                 }
               }
             },

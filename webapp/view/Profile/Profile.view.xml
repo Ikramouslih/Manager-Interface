@@ -1,0 +1,105 @@
+<mvc:View
+    controllerName="management.controller.Profile.Profile"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:tnt="sap.tnt"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:a="sap.f"
+    displayBlock="true"
+>
+    <ScrollContainer
+        id="_IDGenScrollContainer1"
+        vertical="true"
+        horizontal="false"
+        height="100%"
+    >
+        <a:Card
+            id="_IDGenCard1"
+            class="sapUiMediumMargin"
+            width="95%"
+        >
+            <a:content>
+                <VBox
+                    id="_IDGenVBox1a"
+                    class="sapUiSmallMargin"
+                >
+                    <f:Form
+                        id="FormToolbar"
+                        editable="true"
+                        ariaLabelledBy="Title1"
+                        width="100%"
+                    >
+                        <f:toolbar>
+                            <Toolbar id="TB1">
+                                <Title
+                                    id="Title1"
+                                    text="My profile "
+                                />
+                                <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                            </Toolbar>
+                        </f:toolbar>
+                        <f:layout>
+                            <f:ResponsiveGridLayout
+                                id="_IDGenResponsiveGridLayout1"
+                                labelSpanXL="0"
+                                labelSpanL="0"
+                                labelSpanM="0"
+                                labelSpanS="0"
+                                emptySpanXL="0"
+                                emptySpanL="0"
+                                emptySpanM="0"
+                                emptySpanS="0"
+                                columnsXL="3"
+                                columnsL="3"
+                                columnsM="3"
+                                singleContainerFullSize="false"
+                            />
+                        </f:layout>
+                        <f:formContainers>
+                            <f:FormContainer
+                                id="_IDGenFormContainer1"
+                                ariaLabelledBy="Title2"
+                            >
+                                <f:toolbar>
+                                    <Toolbar id="_IDGenToolbar1">
+                                        <Title
+                                            id="Title2"
+                                            text="Personal Information"
+                                        />
+                                        <ToolbarSpacer
+                                            id="_IDGenToolbarSpacer2"
+                                        />
+                                    </Toolbar>
+                                </f:toolbar>
+                                <f:formElements>
+                                    <f:FormElement id="_IDGenFormElement1">
+                                        <HBox
+                                            id="_IDGenHBox1"
+                                            width="90%"
+                                            class="SapUiMediumMarginTop marginLeft"
+                                        >
+                                            <mvc:XMLView
+                                                id="_IDGenXMLView1"
+                                                viewName="management.view.Consultants.Profile.Card"
+                                            />
+                                            <layoutData>
+                                                <FlexItemData
+                                                    id="_IDGenFlexItemData1"
+                                                    growFactor="1"
+                                                    baseSize="0"
+                                                    backgroundDesign="Solid"
+                                                    styleClass="sapUiTinyMargin"
+                                                />
+                                            </layoutData>
+                                        </HBox>
+                                    </f:FormElement>
+                                </f:formElements>
+                            </f:FormContainer>
+                        </f:formContainers>
+                    </f:Form>
+                </VBox>
+            </a:content>
+        </a:Card>
+    </ScrollContainer>
+</mvc:View>

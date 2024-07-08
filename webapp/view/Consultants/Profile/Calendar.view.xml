@@ -8,8 +8,7 @@
 >
     <l:VerticalLayout
         id="_IDGenVerticalLayout1"
-        width=""
-        class="sapUiMediumMargin"
+        class="sapUiMediumMarginTop"
     >
         <u:Calendar
             id="calendar"

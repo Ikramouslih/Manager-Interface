@@ -289,6 +289,13 @@
           "target": [
             "UpdateManager"
           ]
+        },
+        {
+          "name": "Profile",
+          "pattern": "Profile/",
+          "target": [
+            "Profile"
+          ]
         }
       ],
       "targets": {
@@ -376,6 +383,13 @@
           "clearControlAggregation": false,
           "viewId": "UpdateTicket",
           "viewName": "Tickets.UpdateTicket"
+        },
+        "Profile": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Profile",
+          "viewName": "Profile.Profile"
         }
       }
     },

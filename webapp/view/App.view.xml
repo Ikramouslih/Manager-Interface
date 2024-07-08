@@ -45,6 +45,7 @@
                     id="userButton"
                     text="{i18n>userId}"
                     type="Transparent"
+                    press="onProfileSelect"
                 >
                     <layoutData>
                         <OverflowToolbarLayoutData
