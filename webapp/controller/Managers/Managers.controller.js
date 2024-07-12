@@ -48,7 +48,7 @@ sap.ui.define([
         var sManagerId = oBindingContext.getProperty("ManagerId");
         
         // Navigate to the details view with the selected person's ID
-        //this.getOwnerComponent().getRouter().navTo("ManagerDetails", { managerId: sManagerId });
+        this.getOwnerComponent().getRouter().navTo("ManagerDetails", { managerId: sManagerId });
       },
 
       onEdit: function (oEvent) {

@@ -296,6 +296,13 @@
           "target": [
             "Profile"
           ]
+        },
+        {
+          "name": "ManagerDetails",
+          "pattern": "managerDetails/{managerId}",
+          "target": [
+            "ManagerDetails"
+          ]
         }
       ],
       "targets": {
@@ -390,6 +397,13 @@
           "clearControlAggregation": false,
           "viewId": "Profile",
           "viewName": "Profile.Profile"
+        },
+        "ManagerDetails": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "ManagerDetails",
+          "viewName": "Managers.Profile.ManagerDetails"
         }
       }
     },

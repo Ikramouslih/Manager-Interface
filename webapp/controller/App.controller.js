@@ -200,11 +200,10 @@ function (
         filters: [new Filter("ReceivedBy", FilterOperator.EQ, sUserId)],
         success: function (oData) {
           oData.results.sort(function (a, b) {
-            var dateA = new Date(a.DateNotif);
-            var dateB = new Date(b.DateNotif);
-            return dateA - dateB;
+            return b.DateNotif - a.DateNotif;
           });
-          aNotifications = oData.results.slice(-10);
+          // aNotifications = oData.results.slice(-10);
+          aNotifications = oData.results;
           checkIfAllLoaded();
         },
         error: function (oError) {

@@ -99,10 +99,10 @@
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
-    margin-top: 10px !important;
 }
-svg.sapSuiteIDCChartSVG{
-    margin-top: 1.5rem !important;
+ 
+#application-management-display-component---Management--_IDGenXMLView3--_IDGenXMLView4--_IDGenInteractiveDonutChart15{
+    margin-left: 1.5rem !important;
 }
 
 /* Blue Donut Circle management chart */
@@ -201,7 +201,7 @@ svg.sapSuiteIDCChartSVG{
  
  
 /* Tables Style */
-.sapFDynamicPageContent, .sapFDynamicPageContentFitContainer {
+ .sapFDynamicPageContent, .sapFDynamicPageContentFitContainer {
     padding: 1rem 3rem 0 3rem !important;
 }
 .sapMITH .sapMITBHead {
@@ -376,53 +376,6 @@ svg.sapSuiteIDCChartSVG{
     align-items: center;
 } 
 
-
-/* my workflow */
-.customFormElementWidth {
-    width: 90% !important; /* Adjust as needed */
-}
-.customButtonVBoxWidth {
-    width: 12% !important; /* Adjust as needed */
-}
-
-/* My profile */
-.donutile{
-    align-self: center !important;
-}
-.marginLeft{
-    margin-left: -15px !important;
-    margin-top: 23px !important;
-}
-.marginLeft20{
-    margin-left: -20px !important;
-}
-.marginLeftCalendar{
-    margin-left: -15px !important;    
-}
-#application-management-display-component---ConsultantDetails--_IDGenXMLView3--_IDGenFlexBox80{
-    max-height: 10rem !important;
-    margin-left: 1.5rem !important;
-}
-#application-management-display-component---Home--_IDGenXMLView3--_IDGenInteractiveDonutChart150{
-    max-height: 300px !important;
-}
-.sapSuiteIDCChartSVG{
-    max-height: 100px !important;
-}
-.sapSuiteIDCLegend{
-    max-height: 150px !important;
-}
-.sapSuiteIDCLegendValue{
-    visibility: hidden !important;
-}
-.sapMFlexItemAlignAuto  {
-    align-self: center !important;
-}
-#application-management-display-component---ConsultantDetails--tileAssigned{
-    margin: 5px !important;
-    width: 12rem !important;
-}
-
 /* Profile table */
 .sapMTableTH{    
     text-align: center !important;
@@ -446,3 +399,34 @@ svg.sapSuiteIDCChartSVG{
     font-weight: normal !important;
 }
 
+/* consultant profile chart */
+#application-management-display-component---ConsultantDetails--_IDGenXMLView3--_IDGenFlexBox80{
+    height: 15rem !important;
+    width: 30rem !important;
+    max-height: 9rem !important;
+    align-self: center !important;
+    margin-top: 2rem !important;
+}
+
+#application-management-display-component---ConsultantDetails--_IDGenXMLView3--_IDGenInteractiveDonutChart150{
+    max-height: 300px !important;
+}
+.sapSuiteIDCLegend {
+    max-height: 150px !important;
+}
+.chrtdonut{
+    align-self: center;
+    margin: 5px;
+}
+.marginLeft{
+    margin-left: -15px !important;
+    margin-top: 23px !important;
+}
+.donutile{
+    align-self: center;
+    margin: 5px;
+}
+
+.sapMFlexItemAlignAuto {
+    align-self: center !important;
+}

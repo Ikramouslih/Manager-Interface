@@ -144,7 +144,7 @@ sap.ui.define([
           CreatedBy: oView.getBindingContext().getProperty("CreatedBy"),
           CreationDate: oView.getBindingContext().getProperty("CreationDate"),
           Consultant: oView.getBindingContext().getProperty("Consultant"),
-          Status: oView.getBindingContext().getProperty("Status"),
+          Status: oView.getBindingContext().getProperty("Status")
         }; 
 
         var oModel = this.getView().getModel();

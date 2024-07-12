@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="management.controller.Profile.Profile"
+    controllerName="management.controller.Managers.Profile.ManagerDetails"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
@@ -34,7 +34,7 @@
                             <Toolbar id="TB1">
                                 <Title
                                     id="Title1"
-                                    text="My profile "
+                                    text="Profile #{ManagerId}"
                                 />
                                 <ToolbarSpacer id="_IDGenToolbarSpacer1" />
                             </Toolbar>
@@ -77,11 +77,11 @@
                                         <HBox
                                             id="_IDGenHBox1"
                                             width="90%"
-                                            class="SapUiMediumMarginTop "
+                                            class="SapUiMediumMarginTop marginLeft"
                                         >
                                             <mvc:XMLView
                                                 id="_IDGenXMLView1"
-                                                viewName="management.view.Profile.Card"
+                                                viewName="management.view.Managers.Profile.Card"
                                             />
                                             <layoutData>
                                                 <FlexItemData

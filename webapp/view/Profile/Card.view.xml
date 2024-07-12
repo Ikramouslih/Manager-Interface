@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="management.controller.Consultants.Profile.ConsultantDetails"
+    controllerName="management.controller.Profile.Profile"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
@@ -29,7 +29,12 @@
 			</form:layout>
 			<form:formContainers>
 				<form:FormContainer id="_IDGenFormContainer1">
-					<form:formElements>						
+					<form:formElements>			
+						<form:FormElement id="_IDGenFormElazdazement1" label="ID">
+								<form:fields>
+									<Text text="{ManagerId}" id="IDDD"/>
+								</form:fields>
+						</form:FormElement>			
 						<form:FormElement id="_IDGenFormElement1" label="Name">
 							<form:fields>
 								<Text text="{Name} {FirstName}" id="name"/>
@@ -39,11 +44,6 @@
 							<form:fields>
 								<Text id="_IDGenText3" text="{Email}">
 								</Text>
-							</form:fields>
-						</form:FormElement>
-						<form:FormElement id="_IDGenczdcFormElejyfment1" label="Grade">
-							<form:fields>
-								<Text text="{Grade}" id="idd"/>
 							</form:fields>
 						</form:FormElement>
                         <form:FormElement id="_IDGenFormElazemenzet3" label="Expertise">

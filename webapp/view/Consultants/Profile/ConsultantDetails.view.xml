@@ -34,7 +34,7 @@
                             <Toolbar id="TB1">
                                 <Title
                                     id="Title1"
-                                    text="My profile "
+                                    text="Profile #{ConsultantId} "
                                 />
                                 <ToolbarSpacer id="_IDGenToolbarSpacer1" />
                                 <tnt:InfoLabel
@@ -150,6 +150,7 @@
                                         <Title
                                             id="Title4"
                                             text="Tickets Stats"
+                                            class="marginLeft20"
                                         />
                                         <ToolbarSpacer
                                             id="_IDGenToolbarSpacer4"
@@ -203,7 +204,6 @@
                                                 id="tileAssigned"
                                                 header="Total Tickets"
                                                 subheader="Done"
-                                                press="onTicketTilePress"
                                             >
                                                 <TileContent
                                                     id="_IDGenTileContent73"

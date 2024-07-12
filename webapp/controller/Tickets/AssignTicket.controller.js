@@ -126,7 +126,7 @@ sap.ui.define(
         if (sConsultantId === null) {
           oData.Status = 'Unassigned';
         } else {
-          oData.Status = 'In Progress';
+          oData.Status = 'On Hold';
           oData.Consultant = sConsultantId;
         }
 

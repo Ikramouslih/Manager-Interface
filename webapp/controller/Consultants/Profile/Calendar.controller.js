@@ -15,10 +15,6 @@ sap.ui.define([
                 var oDataModel2 = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZODA_GEST_CALENDRIER_SRV/");
                 this.getView().setModel(oDataModel2, "odataModel2");
 
-                var aUnAvailableDates = [];
-                var aAvailableDates = [];
-                var oModel2 = this.getView().getModel("odataModel2");
-
                 function convertDateFormat(dateString) {
                     var year = dateString.substring(0, 4);
                     var month = dateString.substring(4, 6) - 1; // Les mois commencent à 0 en JavaScript
@@ -28,8 +24,15 @@ sap.ui.define([
 
                 oRouter.getRoute("ConsultantDetails").attachPatternMatched(function (oEvent) {
                     var sConsultantId = oEvent.getParameter("arguments").consultantId;
-
                     var oFilter = new Filter("IdConsultant", FilterOperator.EQ, sConsultantId);
+                    var oModel2 = this.getView().getModel("odataModel2");
+
+                    // Clear the Calendar and Legend before adding new items
+                    oCalendar.destroySpecialDates();
+                    oLegend.destroyItems();
+
+                    var aUnAvailableDates = [];
+                    var aAvailableDates = [];
 
                     oModel2.read("/CALENDARIDSet", {
                         filters: [oFilter],
@@ -68,7 +71,7 @@ sap.ui.define([
                             }));
                         },
                         error: function (error) {
-                            console.error("Error !!!!!!!!!!!!!!!!!!!!!", error);
+                            console.error("Error reading data:", error);
                         }
                     });
                 }, this);
