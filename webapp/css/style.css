@@ -407,7 +407,6 @@
     align-self: center !important;
     margin-top: 2rem !important;
 }
-
 #application-management-display-component---ConsultantDetails--_IDGenXMLView3--_IDGenInteractiveDonutChart150{
     max-height: 300px !important;
 }
@@ -426,7 +425,35 @@
     align-self: center;
     margin: 5px;
 }
+.chartimg{
+    margin-left: 40px;
+    margin-top: 5px;
+}
+.marginLeft30{
+    margin-left: 4rem !important;
+}
 
-.sapMFlexItemAlignAuto {
-    align-self: center !important;
+/* My Profile table */
+
+#application-management-display-component---Profile--_IDGenXMefazLView1--idProductsTable{
+    width: 100% !important;
+    height: 20rem !important;
+    overflow: scroll !important;
+}
+.statusWidthProfile .sapMGenericTagWrap{
+    width: 7rem !important;
+    min-width: 7rem !important;
+    max-width: 7rem !important;
+}
+
+/* Managers profile table */
+.managerprofiletable{
+    width: 100% !important;
+    height: 17.5rem !important;
+    overflow: scroll !important;
+}
+
+/* Notification seen */
+.unseenNotification {
+    background-color: #e5e9f3; /* Light gray background for seen notifications */
 }

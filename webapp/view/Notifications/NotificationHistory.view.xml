@@ -1,0 +1,53 @@
+<mvc:View
+    controllerName="management.controller.Notifications.NotificationHistory"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:a="sap.f"
+    height="100%">
+
+    <ScrollContainer
+        id="_IDGenScrollContainer1"
+        vertical="true"
+        horizontal="false"
+        height="100%">
+        
+        <a:Card id="_IDGenCard1" class="sapUiMediumMargin" width="95%">
+            <a:content>
+                <VBox id="notificationVBoxContainer" class="sapUiSmallMargin" width="100%">
+                    <f:Form id="FormToolbar" editable="true" ariaLabelledBy="Title1" width="100%">
+                        <f:toolbar>
+                            <Toolbar id="TB1">
+                                <Title id="Title1" text="Notifications"/>
+                                <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                            </Toolbar>
+                        </f:toolbar>
+                        <f:layout>
+                            <f:ResponsiveGridLayout id="_IDGenResponsiveGridLayout1"
+                                labelSpanXL="0"
+                                labelSpanL="0"
+                                labelSpanM="0"
+                                labelSpanS="0"
+                                emptySpanXL="0"
+                                emptySpanL="0"
+                                emptySpanM="0"
+                                emptySpanS="0"                                                      
+                                singleContainerFullSize="true"
+                            />
+                        </f:layout>
+                        <f:FormContainer id="_IDGenFormContainer1" ariaLabelledBy="Title2" >
+                            <f:formElements>
+                                <f:FormElement id="_IDGenFormElement1">
+                                    <VBox id="notificationVBox" width="100%">
+                                        <!-- Notification items will be inserted here -->
+                                    </VBox> 
+                                </f:FormElement>
+                            </f:formElements>
+                        </f:FormContainer>
+                    </f:Form>
+                </VBox>
+            </a:content>
+        </a:Card>
+    </ScrollContainer>
+</mvc:View>

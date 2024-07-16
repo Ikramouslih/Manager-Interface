@@ -63,7 +63,6 @@ sap.ui.define([
         });
       },
 
-      // Function to load tickets along with associated consultant and user (CreatedBy) names
       loadTicketsWithConsultantAndUserNames: function (sConsultantId) {
         var oModel = this.getOwnerComponent().getModel();
         var aTickets = [];
@@ -73,7 +72,6 @@ sap.ui.define([
 
         var checkIfAllLoaded = function () {
           if (aTickets.length > 0 && aConsultants.length > 0 && aProjects.length > 0 && aManagers.length > 0) {
-            // Create maps for quick lookup
             var oConsultantMap = aConsultants.reduce(function (map, consultant) {
               map[consultant.ConsultantId] = consultant.Name + " " + consultant.FirstName;
               return map;
@@ -89,20 +87,17 @@ sap.ui.define([
               return map;
             }, {});
 
-            // Merge ticket data with consultant, project, and user/manager names
             var aMergedData = aTickets.map(function (ticket) {
               ticket.ProjectName = oProjectMap[ticket.Projet] || "Unknown Project";
               ticket.CreatedByName = oConsultantMap[ticket.CreatedBy] || oManagerMap[ticket.CreatedBy] || "Unknown User/Manager";
               return ticket;
             });
 
-            // Set merged data to the model
             var oTicketsModel = new JSONModel({ Tickets: aMergedData, TicketCount: aMergedData.length });
             this.getView().setModel(oTicketsModel, "TICKETIDDATA");
           }
         }.bind(this);
 
-        // Read tickets data
         oModel.read("/TICKETIDSet", {
           filters: [new Filter("Consultant", FilterOperator.EQ, sConsultantId)],
           success: function (oData) {
@@ -114,7 +109,6 @@ sap.ui.define([
           }
         });
 
-        // Read consultants data
         oModel.read("/CONSULTANTIDSet", {
           success: function (oData) {
             aConsultants = oData.results;
@@ -125,7 +119,6 @@ sap.ui.define([
           }
         });
 
-        // Read projects data
         oModel.read("/PROJECTIDSet", {
           success: function (oData) {
             aProjects = oData.results;
@@ -136,7 +129,6 @@ sap.ui.define([
           }
         });
 
-        // Read managers data
         oModel.read("/MANAGERIDSet", {
           success: function (oData) {
             aManagers = oData.results;
@@ -151,14 +143,23 @@ sap.ui.define([
       loadDonutData: function (sConsultantId) {
         var oModel = this.getOwnerComponent().getModel();
         var oJSONModel = new JSONModel();
-        var oFilter = new Filter("Consultant", FilterOperator.EQ, sConsultantId);  // Use the same filter as in `_onObjectMatched`
+        var oFilter = new Filter("Consultant", FilterOperator.EQ, sConsultantId);  
 
         oModel.read("/TICKETIDSet", {
-          filters: [oFilter],  // Apply the filter based on the consultant ID
+          filters: [oFilter],  
           success: function (oData) {
-            var aGroupedData = this.groupByStatus(oData.results); // Group data by status
-            oJSONModel.setData({ donutData: aGroupedData });
-            this.getView().setModel(oJSONModel, "donutModel"); // Set the model for the donut chart
+            var aGroupedData = this.groupByStatus(oData.results); 
+
+            var allZero = aGroupedData.every(function(segment) {
+              return segment.value === 0;
+            });
+
+            oJSONModel.setData({ 
+              donutData: aGroupedData,
+              visibilityImg: allZero,
+              visibilityDonut: !allZero
+            });
+            this.getView().setModel(oJSONModel, "donutModel");
           }.bind(this),
           error: function (oError) {
             console.error("Error retrieving data:", oError);
@@ -167,41 +168,27 @@ sap.ui.define([
       },
 
       groupByStatus: function (aData) {
-        var statusCounts = {}; // Objet pour stocker les comptes par statut
-
+        var statusCounts = [
+            { label: "On Hold", value: 0, displayedValue: 0 },
+            { label: "In Progress", value: 0, displayedValue: 0 }
+        ];
+    
         aData.forEach(function (item) {
-          var status = item.Status || "Inconnu"; // Si le statut est vide ou indéfini, le définir à "Inconnu"
-
-          if (!statusCounts[status]) { 
-            statusCounts[status] = 1;
-          } else { 
-            statusCounts[status]++;
-          }
+            var status = item.Status || "Unknown";
+            var statusObj = statusCounts.find(s => s.label === status);
+            if (statusObj) {
+                statusObj.value++;
+                statusObj.displayedValue++;
+            }
         });
-
-        var aDonutData = [];
-
-        // Convertir l'objet de comptes en tableau pour le Donut Chart
-        for (var key in statusCounts) {
-          aDonutData.push({
-            label: key, // Le label du segment (le statut)
-            value: statusCounts[key], // La valeur du segment (le nombre de tickets)
-            displayedValue: statusCounts[key] + " tickets" // La valeur affichée
-          });
-        }
-
-        aDonutData = aDonutData.filter(function (item) {
-          return item.label !== "Done";
+    
+        statusCounts = statusCounts.filter(function (item) {
+            return item.label !== "Done";
         });
-
-        return aDonutData;
+    
+        return statusCounts;
       },
 
-      onSelectionChanged: function (oEvent) {
-        var oSelectedSegment = oEvent.getParameter("selectedSegment");
-      },
-      
-      // Show the ticket information in a dialog
       showTicketInfo: function (oEvent) {
         var oLink = oEvent.getSource();
         var oBindingContext = oLink.getBindingContext("TICKETIDDATA");
@@ -210,7 +197,7 @@ sap.ui.define([
         var oModel = this.getView().getModel();
         oModel.read("/TICKETIDSet('" + sTicketId + "')", {
             success: function (oData) {
-                console.log("Ticket details fetched:", oData); // Check if oData contains the expected data
+                console.log("Ticket details fetched:", oData); 
     
                 if (!this._pTicketDetailsDialog) {
                     this._pTicketDetailsDialog = Fragment.load({
@@ -232,12 +219,6 @@ sap.ui.define([
                 MessageToast.show("Error fetching ticket data: " + oError.message);
             }
         });
-      },
-
-      onCloseDialog: function () {
-        if (this._oDialog) {
-          this._oDialog.close();
-        }
       },
 
       onCloseDialog: function () {

@@ -1,0 +1,107 @@
+<mvc:View
+    controllerName="management.controller.Profile.Profile"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:m="sap.m"
+    xmlns:semantic="sap.f.semantic"
+    displayBlock="true"
+    xmlns="sap.ui.table"
+    xmlns:tnt="sap.tnt"
+    xmlns:dnd="sap.ui.core.dnd"
+>
+            <m:Table
+                id="idProductsTable"
+                mode="SingleSelectMaster"
+                items="{TicketsModel>/Tickets}"
+                alternateRowColors="true"
+            >
+                <!-- Liaison aux données OData -->
+                <m:columns >
+                    <!-- Définition des colonnes -->
+
+                    <!-- Invisible column for the Id-->
+                    <m:Column
+                        id="_IDGenColumn11"
+                        visible="false"
+                    >
+                        <m:Label
+                            id="_IDGenLabel11"
+                            text="Id"
+                            class="theadProfile"
+                        />
+                    </m:Column>
+
+                    <m:Column
+                        id="_IDGenColumn1a2"
+                    >
+                        <m:Label
+                            id="_IDGenLabel1a2"
+                            text="Ticket"
+                            class="theadProfile"
+                        />
+                    </m:Column>
+
+                    <m:Column
+                        id="_IDGenColumn122"
+                    >
+                        <m:Label
+                            id="_IDGenLabel122"
+                            text="Consultant"
+                            class="theadProfile"
+                        />
+                    </m:Column>
+
+                    <m:Column
+                        id="_IDGenColumna12"
+                    >
+                        <m:Label
+                            id="_IDGenLabel1a2a"
+                            text="Status"
+                            class="theadProfile"
+                        />
+                    </m:Column>
+
+                </m:columns>
+
+
+                <m:dragDropConfig>
+			        <dnd:DragInfo id="_IDGenDragInfo1"
+    			    	groupName="2inProgress"
+	    	    		sourceAggregation="items" />
+		        	<dnd:DropInfo id="_IDGenDropInfo1"
+	    		    	groupName="fromInProgress"
+    				    drop="onDropDone" />
+        		</m:dragDropConfig>
+
+
+                <m:items>
+			        <m:ColumnListItem id="_IDGenColumnListItem1">
+				        <m:cells >
+                            <m:Text
+                                id="_IDGenText111"
+                                text="{TicketsModel>IdTicket}"
+                            />
+
+                            <m:Link
+                                id="_IDGenText11a2"
+                                text="{TicketsModel>Titre}"
+                                press="showTicketInfo"
+                            />
+
+                            <m:Text
+                                id="_IDGenText1122"
+                                text="{= ${TicketsModel>ConsultantName} === '' ? '-' : ${TicketsModel>ConsultantName}}"
+                                wrapping="false"
+                            />
+
+                            <m:GenericTag
+                                    id="_IDGenGenericTag1"
+                                    text="{TicketsModel>Status}"
+                                    design="Full"
+                                    class="statusWidthProfile"
+                                    status="{= ${TicketsModel>Status} === 'Done' ? 'Success' : ${TicketsModel>Status} === 'Unassigned' ? 'Error' : ${TicketsModel>Status} === 'In Progress' ? 'Information' : 'Warning'}"
+                            />
+				        </m:cells>
+			        </m:ColumnListItem>
+		        </m:items>
+            </m:Table>
+</mvc:View>

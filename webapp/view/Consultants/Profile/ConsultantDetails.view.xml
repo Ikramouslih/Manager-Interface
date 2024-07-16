@@ -200,7 +200,7 @@
                                                 />
                                             </layoutData>
                                             <GenericTile
-                                                class="donutile"
+                                                class="marginLeft30"
                                                 id="tileAssigned"
                                                 header="Total Tickets"
                                                 subheader="Done"

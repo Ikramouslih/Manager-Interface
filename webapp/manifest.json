@@ -303,6 +303,13 @@
           "target": [
             "ManagerDetails"
           ]
+        },
+        {
+          "name": "NotificationHistory",
+          "pattern": "NotificationHistory/",
+          "target": [
+            "NotificationHistory"
+          ]
         }
       ],
       "targets": {
@@ -404,6 +411,13 @@
           "clearControlAggregation": false,
           "viewId": "ManagerDetails",
           "viewName": "Managers.Profile.ManagerDetails"
+        },
+        "NotificationHistory": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "NotificationHistory",
+          "viewName": "Notifications.NotificationHistory"
         }
       }
     },

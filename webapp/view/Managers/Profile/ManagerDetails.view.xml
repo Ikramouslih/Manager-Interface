@@ -42,17 +42,17 @@
                         <f:layout>
                             <f:ResponsiveGridLayout
                                 id="_IDGenResponsiveGridLayout1"
-                                labelSpanXL="0"
-                                labelSpanL="0"
-                                labelSpanM="0"
-                                labelSpanS="0"
+                                labelSpanXL="3"
+                                labelSpanL="3"
+                                labelSpanM="3"
+                                labelSpanS="12"
                                 emptySpanXL="0"
                                 emptySpanL="0"
                                 emptySpanM="0"
                                 emptySpanS="0"
-                                columnsXL="3"
-                                columnsL="3"
-                                columnsM="3"
+                                columnsXL="2"
+                                columnsL="2"
+                                columnsM="2"
                                 singleContainerFullSize="false"
                             />
                         </f:layout>
@@ -86,6 +86,46 @@
                                             <layoutData>
                                                 <FlexItemData
                                                     id="_IDGenFlexItemData1"
+                                                    growFactor="1"
+                                                    baseSize="0"
+                                                    backgroundDesign="Solid"
+                                                    styleClass="sapUiTinyMargin"
+                                                />
+                                            </layoutData>
+                                        </HBox>
+                                    </f:FormElement>
+                                </f:formElements>
+                            </f:FormContainer>
+                            <f:FormContainer
+                                id="_IDGenFormContazeziner1"
+                                ariaLabelledBy="Title2"
+                            >
+                                <f:toolbar>
+                                    <Toolbar id="_IDGenTooefazlbar1">
+                                        <Title
+                                            id="Titlezfae2"
+                                            text="{= 'Tickets created by this manager: ' + ${CountModel>/numberOfTickets}} tickets."
+                                        />
+                                        <ToolbarSpacer
+                                            id="_IDGenTofzeolbarSpacer2"
+                                        />
+                                    </Toolbar>
+                                </f:toolbar>
+                                <f:formElements>
+                                    <f:FormElement id="_IDGenFormEefzeflement1">
+                                        <HBox
+                                            id="_IDGenHBozevazx1"
+                                            width="100%"
+                                            class="SapUiMediumMarginTop "
+                                        >
+                                            <mvc:XMLView
+                                                id="_IDGenXMefazLView111"
+                                                class="managerprofiletable"
+                                                viewName="management.view.Managers.Profile.TicketsCreatedByOtherM"
+                                            />
+                                            <layoutData>
+                                                <FlexItemData
+                                                    id="_IDGenFlexzefazeItemData1"
                                                     growFactor="1"
                                                     baseSize="0"
                                                     backgroundDesign="Solid"

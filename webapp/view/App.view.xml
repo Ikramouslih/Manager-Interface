@@ -55,13 +55,11 @@
                     </layoutData>
                 </Button>
                 <Button
-                    id="notificationButton"
-                    icon="sap-icon://bell"
-                    visible="{= ${alerts>/alerts/notifications}.length === 0 ? false : true }"
+                   id="notificationButton"
                     type="Transparent"
                     press=".onNotificationPress"
-                    tooltip="{i18n>notificationButtonTooltip}"
-                    
+                    tooltip="Notifications"     
+                    icon="{= ${alerts>/unseenCount} > 0 ? '../assets/notifUnseen.png' : '../assets/notifSeen.png' }"
                 >
                     <layoutData>
                         <OverflowToolbarLayoutData

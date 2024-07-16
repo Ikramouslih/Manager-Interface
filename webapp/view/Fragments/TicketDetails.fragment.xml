@@ -122,6 +122,21 @@
                     />
                 </HBox>
                 <HBox
+                    id="_IDGenHBoxedcezc6"
+                    class="ticketDetailRow"
+                >
+                    <Label
+                        id="_IDGenLarergabel5zcez"
+                        text="Consultant:"
+                        class="ticketDetailLabel"
+                    />
+                    <Text
+                        id="_IDGegernText6czc"
+                        text="{/Consultant}"
+                        class="ticketDetailText"
+                    />
+                </HBox>
+                <HBox
                     id="_IDGenHBox7"
                     class="ticketDetailRow"
                 >

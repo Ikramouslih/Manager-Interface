@@ -10,19 +10,27 @@
         renderType="Bare"
         width="30rem"
         height="15rem"
+        class="sapSuiteIDCChartSegmentUpdated"
     >
+        <m:Image
+            id="_IDGenImzeczeage1"
+            src="../../../assets/donutchart.png"
+            visible="{donutModel>/visibilityImg}"
+            width="14rem"
+            height="7rem"
+            class="chartimg"
+        />
         <InteractiveDonutChart
             id="_IDGenInteractiveDonutChart150"
             segments="{donutModel>/donutData}"
-            selectionChanged="onSelectionChanged"
+            visible="{donutModel>/visibilityDonut}"
         >
             <segments>
                 <InteractiveDonutChartSegment
                     id="_IDGenInteractiveDonutChartSegment150"
                     label="{donutModel>label}"
                     value="{donutModel>value}"
-                    displayedValue=""
-                    class="itemscontainer"
+                    displayedValue="{donutModel>displayedValue}"
                 />
             </segments>
         </InteractiveDonutChart>
