@@ -37,7 +37,7 @@
                                 <f:formElements>
                                     <f:FormElement id="targetElement" label="Target">
                                         <f:fields>
-                                            <Input id="target" value="{/ChefProjet}" required="true" />
+                                            <Input id="target" value="{Target}" required="true" />
                                         </f:fields>
                                     </f:FormElement>
                                 </f:formElements>
