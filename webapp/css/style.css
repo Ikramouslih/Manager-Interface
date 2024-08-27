@@ -52,6 +52,15 @@
 .sapTntNavLIItem .sapUiIcon {
     color: rgb(0,171,155) !important;
 }
+#application-management-display-component---App--_IDGenSideNavigation1{
+    border-radius: 15px;
+    margin-top: 3px;
+}
+#application-management-display-component---App--_IDGenToolHeader1{
+    border-radius: 15px;
+    margin-top: 3px;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -456,4 +465,12 @@
 /* Notification seen */
 .unseenNotification {
     background-color: #e5e9f3; /* Light gray background for seen notifications */
+}
+
+/* create and assign ticket select consultant availability */
+.sapMSltPicker-CTX:not(.sapMPickerWrappedItems) {
+    max-height: 250px !important;
+}
+.sapUiSimpleFixFlex {
+    max-height: 250px !important;
 }

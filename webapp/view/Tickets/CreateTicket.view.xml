@@ -75,19 +75,24 @@
                                             </Select>
                                         </f:fields>
                                     </f:FormElement>
-                                    <f:FormElement id="consultantElement" label="Consultant">
-                                        <f:fields>
-                                            <Select id="Consultant" forceSelection="false" items="{ path: '/CONSULTANTIDSet', sorter: { path: 'ConsultantId' } }">
-                                                <core:Item id="_IDGenItem2" key="{ConsultantId}" text="{Name} {FirstName}" />
-                                            </Select>
-                                        </f:fields>
-                                    </f:FormElement>
                                     <f:FormElement id="technologyElement" label="Technology">
                                         <f:fields>
                                             <MultiInput id="technology" 
                                                 showValueHelp="true" 
                                                 valueHelpRequest="handleValueHelp">
                                             </MultiInput>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement id="consultantElement" label="Consultant">
+                                        <f:fields>
+                                            <Select id="Consultant" forceSelection="false" showSecondaryValues="true">
+                                                <!-- the items will be inserted automatically -->
+                                            </Select>
+                                            <Button id="_IDGenButton4"  text="Automatic Assignment" press="onAutomaticAssignment">
+                                                <layoutData>
+                                                    <l:GridData id="_IDGenGridData1" span="XL2 L1 M3 S4" />
+                                                </layoutData>
+                                            </Button>
                                         </f:fields>
                                     </f:FormElement>
                                     <f:FormElement id="estimatedElement" label="Estimated Days">

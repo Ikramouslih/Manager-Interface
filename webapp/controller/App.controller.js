@@ -81,7 +81,6 @@ function (
           oData.results = oData.results.filter(function (oNotification) {
             return oNotification.ReceivedBy === sUserId;
           });
-          console.log("after user filter",oData.results);
           // Count the number of unseen notifications
           var iUnseenCount = oData.results.filter(function (oNotification) {
             return oNotification.Seen === "0";

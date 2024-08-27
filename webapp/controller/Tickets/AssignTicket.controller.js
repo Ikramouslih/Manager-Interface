@@ -293,7 +293,119 @@ sap.ui.define(
               }
             });
           }
-        }
+        },
+
+        onAutomaticAssignment: function () {
+          var oView = this.getView();
+          
+          var oTechnologyField = oView.byId("technology");
+          var sTechnology = oTechnologyField.getTokens().map(function(token) {
+            return token.getText();
+          });
+        
+          if (sTechnology.length === 0 || sTechnology[0] === "") {
+            MessageToast.show("Please fill in the technology field.");
+            return;
+          }
+        
+          var oModel = this.getView().getModel();
+          var oConsultantField = oView.byId("Consultant");
+        
+          // Create filters for each technology
+          var cFilters = sTechnology.map(function (s) {
+            return new Filter("Expertise", FilterOperator.Contains, s);
+          });
+        
+          // Combine filters using AND operator
+          var combinedFilter = new Filter({
+            filters: cFilters,
+            and: true
+          });
+        
+          oModel.read("/CONSULTANTIDSet", {
+            filters: [combinedFilter],
+            success: function (oData) {
+              var aConsultants = oData.results;
+        
+              console.log("aConsultants", aConsultants);
+        
+              // Calculate match count for each consultant
+              aConsultants.forEach(function(consultant) {
+                var expertiseList = consultant.Expertise.split(", ").map(function(exp) {
+                  return exp.trim();
+                });
+                consultant.matchCount = sTechnology.reduce(function(count, tech) {
+                  return count + (expertiseList.includes(tech) ? 1 : 0);
+                }, 0);
+              });
+        
+              // Sort consultants first by match count and then by ticket count
+              aConsultants.sort(function(a, b) {
+                if (b.matchCount === a.matchCount) {
+                  return a.TicketCount - b.TicketCount;
+                }
+                return b.matchCount - a.matchCount;
+              });
+        
+              // Create a promise for each consultant to get their ticket count
+              var promises = aConsultants.map(function(consultant) {
+                return new Promise(function(resolve, reject) {
+                  // Create ticket filters for the specific consultant and statuses
+                  var ticketFilters = [
+                    new Filter("Consultant", FilterOperator.EQ, consultant.ConsultantId),
+                    new Filter({
+                      filters: [
+                        new Filter("Status", FilterOperator.EQ, "In Progress"),
+                        new Filter("Status", FilterOperator.EQ, "On Hold")
+                      ],
+                      and: false
+                    })
+                  ];
+        
+                  var combinedFilterTickets = new Filter({
+                    filters: ticketFilters,
+                    and: true
+                  });
+        
+                  oModel.read("/TICKETIDSet", {
+                    filters: [combinedFilterTickets],
+                    success: function (oData) {
+                      consultant.TicketCount = oData.results.length;
+                      resolve();
+                    },
+                    error: function (oError) {
+                      reject(oError);
+                    }
+                  });
+                });
+              });
+        
+              // Wait for all ticket count requests to finish
+              Promise.all(promises).then(function() {
+                // Sort consultants by match count and then by ticket count
+                aConsultants.sort(function(a, b) {
+                  if (b.matchCount === a.matchCount) {
+                    return a.TicketCount - b.TicketCount;
+                  }
+                  return b.matchCount - a.matchCount;
+                });
+        
+                // Select the consultant with the most matching technologies and the least amount of tickets
+                if (aConsultants.length > 0) {
+                  var oConsultant = aConsultants[0];
+                  oConsultantField.setSelectedKey(oConsultant.ConsultantId);
+                } else {
+                  MessageToast.show("No consultants found with the matching expertise.");
+                }
+              }).catch(function(oError) {
+                MessageToast.show("Error fetching tickets: " + oError.message);
+              });
+            },
+            error: function (oError) {
+              MessageToast.show("Error fetching consultants: " + oError.message);
+            }
+          });
+        } 
     });
   },  
 );

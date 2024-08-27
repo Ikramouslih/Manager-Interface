@@ -75,19 +75,26 @@
                                             </Select>
                                         </f:fields>
                                     </f:FormElement>
-                                    <f:FormElement id="consultantElement" label="Consultant">
-                                        <f:fields>
-                                            <Select id="Consultant" forceSelection="false" items="{ path: '/CONSULTANTIDSet', sorter: { path: 'ConsultantId' } }" selectedKey="{Consultant}" >
-                                                <core:Item id="_IDGenItem2" key="{ConsultantId}" text="{Name} {FirstName}" />
-                                            </Select>
-                                        </f:fields>
-                                    </f:FormElement>
                                     <f:FormElement id="technologyElement" label="Technology">
                                         <f:fields>
                                             <MultiInput id="technology" 
                                                 showValueHelp="true" 
-                                                valueHelpRequest="handleValueHelp" enabled="false">
+                                                valueHelpRequest="handleValueHelp">
                                             </MultiInput>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement id="consultantElement" label="Consultant">
+                                        <f:fields>
+                                            <Select id="Consultant" forceSelection="false"  items="{ path: '/CONSULTANTIDSet', sorter: { path: 'Name', descending: false } }" showSecondaryValues="true" >
+                                                <core:ListItem id="_IDGenListItem1" key="{ConsultantId}" text="{Name} {FirstName}"
+                                                icon="{= ${Disponilbilty} > 0 ? '../assets/unava.png' : '../assets/ava.png' }"
+                                                additionalText="14"/>
+                                            </Select>
+                                            <Button id="_IDGenButton4"  text="Automatic Assignment" press="onAutomaticAssignment">
+                                                <layoutData>
+                                                    <l:GridData id="_IDGenGridData1" span="XL2 L1 M3 S4" />
+                                                </layoutData>
+                                            </Button>
                                         </f:fields>
                                     </f:FormElement>
                                     <f:FormElement id="estimatedElement" label="Estimated Days">

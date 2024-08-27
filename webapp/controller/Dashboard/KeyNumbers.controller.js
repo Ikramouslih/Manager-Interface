@@ -19,7 +19,6 @@ sap.ui.define([
             },
 
             onPressTarget: function () {
-
                 if (!this._pTargetDialog) {
                     this._pTargetDialog = Fragment.load({
                         id: this.getView().getId(),
@@ -160,7 +159,7 @@ sap.ui.define([
             },
 
             _calculatePriorityChart: function () {
-                var oModel = this.getOwnerComponent().getModel(); // Assuming you have set a model for your view
+                var oModel = this.getOwnerComponent().getModel(); 
                 var oJSONModel = new sap.ui.model.json.JSONModel();
 
                 oModel.read("/TICKETIDSet", {

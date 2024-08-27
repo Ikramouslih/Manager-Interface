@@ -16,55 +16,60 @@ sap.ui.define([
           available: [new Filter("Disponilbilty", FilterOperator.EQ, "1")],
           unavailable: [new Filter("Disponilbilty", FilterOperator.EQ, "0")]
         };
-
+      
         var oModel = this.getOwnerComponent().getModel();
-
+      
         // Fetch all consultants
         oModel.read("/CONSULTANTIDSet", {
           success: function (oData) {
             var oConsultantsModel = new JSONModel({ Consultants: oData.results });
             this.getView().setModel(oConsultantsModel, "ConsultantsModel");
+            console.log("All consultants data:", oData.results);
           }.bind(this),
           error: function (oError) {
             console.error("Error reading consultants:", oError);
           }
         });
-
+      
         // Fetch the count of consultants
         oModel.read("/CONSULTANTIDSet/$count", {
           success: function (iCount) {
             var oCountModel = new JSONModel({ count: iCount });
             this.getView().setModel(oCountModel, "CountModel");
+            console.log("Consultant count:", iCount);
           }.bind(this),
           error: function (oError) {
             console.error("Error reading consultant count:", oError);
           }
         });
-
+      
         // Fetch the count of available consultants
         oModel.read("/CONSULTANTIDSet/$count", {
-          filters: [new Filter("Disponilbilty", FilterOperator.EQ, "1")],
+          filters: this._mFilters.available,
           success: function (iCount) {
             var oCountModel = this.getView().getModel("CountModel");
             oCountModel.setProperty("/available", iCount);
+            console.log("Available consultants count:", iCount);
           }.bind(this),
           error: function (oError) {
             console.error("Error reading available consultants count:", oError);
           }
         });
-
+      
         // Fetch the count of unavailable consultants
         oModel.read("/CONSULTANTIDSet/$count", {
-          filters: [new Filter("Disponilbilty", FilterOperator.EQ, "0")],
+          filters: this._mFilters.unavailable,
           success: function (iCount) {
             var oCountModel = this.getView().getModel("CountModel");
             oCountModel.setProperty("/unavailable", iCount);
+            console.log("Unavailable consultants count:", iCount);
           }.bind(this),
           error: function (oError) {
             console.error("Error reading unavailable consultants count:", oError);
           }
         });
       },
+      
 
       onShow: function (oEvent) {
         var oItem = oEvent.getSource();
